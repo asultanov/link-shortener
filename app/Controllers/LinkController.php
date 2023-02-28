@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Validator;
 class LinkController extends MainController
 {
 
+    /**
+     * @return void
+     * @param $url
+     * @Rest\POST
+     */
     public function makeLink()
     {
         header('Content-type: application/json');
@@ -27,9 +32,12 @@ class LinkController extends MainController
         } else {
             header((isset($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.0') . ' 404');
         }
-
     }
 
+    /**
+     * @param $lnk
+     * @return void
+     */
     public function goToLink($lnk)
     {
         $link = Link::whereArgument($lnk)->first();
@@ -44,6 +52,9 @@ class LinkController extends MainController
     }
 
 
+    /**
+     * @return string
+     */
     private function gen_uuid()
     {
         return sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
