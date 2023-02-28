@@ -20,7 +20,7 @@ class App
     public function run()
     {
 
-        require_once __DIR__.'/routes/web.php';
+        require_once ROOT_DIR . '/app/routes/web.php';
 
         $routerDispatch = $this->router->dispatch(Common::getMethod(), Common::getPatchUri());
 
@@ -29,7 +29,7 @@ class App
         }
 
         list($class, $action) = explode('@', $routerDispatch->getController(), 2);
-        $controller = '\\App\\Controllers\\' . $class;
+        $controller = '\\' . ENV . '\\Controllers\\' . $class;
         $parameters = $routerDispatch->getParameters();
 
         call_user_func_array([new $controller($this->di), $action], $parameters);

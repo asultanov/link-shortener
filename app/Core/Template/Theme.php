@@ -2,8 +2,6 @@
 
 namespace App\Core\Template;
 
-use mysql_xdevapi\Exception;
-
 class Theme
 {
     const RULES_FILE_NAME = [
@@ -84,7 +82,8 @@ class Theme
      */
     public function loadTemplateFile($fileName, $data = [])
     {
-        $templateFile = ROOT_DIR . '/app/resources/views/default/' . $fileName . '.php';
+        //$templateFile =
+        $templateFile = $this->getTemplatePath($fileName, ENV);
         if (is_file($templateFile)) {
             extract($data);
             require_once $templateFile;
@@ -106,5 +105,19 @@ class Theme
     public function setData(array $data): void
     {
         $this->data = $data;
+    }
+
+    protected function getTemplatePath($template, $env = null)
+    {
+        switch ($env) {
+            case 'Admin':
+                return ROOT_DIR . '/app/resources/views/admin/' . $template . '.php';
+                break;
+            case 'App':
+                return ROOT_DIR . '/app/resources/views/guest/' . $template . '.php';
+                break;
+            default:
+                return ROOT_DIR . '/app/resources/views/' . mb_strtolower($env) . '/' . $template . '.php';
+        }
     }
 }

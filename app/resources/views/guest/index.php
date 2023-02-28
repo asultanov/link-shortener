@@ -8,11 +8,11 @@
 </head>
 <body>
 
-<?php $this->theme->header() ?>
+<?php $this->header() ?>
 
 <?= $name. ' - index file<br>' ?>
 
-<?php $this->theme->footer() ?>
+<?php $this->footer() ?>
 
 </body>
 </html>

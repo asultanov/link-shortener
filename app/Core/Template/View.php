@@ -2,20 +2,8 @@
 
 namespace App\Core\Template;
 
-use App\Core\Template\Theme;
-
-class View
+class View extends Theme
 {
-    /**
-     * @var \App\Core\Template\Theme
-     */
-    protected $theme;
-
-    public function __construct()
-    {
-        $this->theme = new Theme();
-    }
-
     /**
      * @param $template
      * @param $vars
@@ -23,12 +11,12 @@ class View
      */
     public function render($template, $vars = [])
     {
-        $templatePatch = ROOT_DIR . '/app/resources/views/default/' . $template . '.php';
+        $templatePatch = $this->getTemplatePath($template, ENV);
 
         if (!is_file($templatePatch))
             throw new \InvalidArgumentException(sprintf('Template "%s" not found in "%s"', $template, $templatePatch));
 
-        $this->theme->setData($vars);
+        $this->setData($vars);
         extract($vars);
         ob_start();
         ob_implicit_flush(0);
