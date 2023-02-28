@@ -1,1 +1,2 @@
-<?= $this->data['name'] ?> - footer file<br>
+</body>
+</html>

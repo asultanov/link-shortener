@@ -10,8 +10,11 @@ $dotenv->load();
 new \App\Core\Database\Connection;
 try {
     Capsule::schema()->create('links', function ($table) {
-        $table->increments('id');
-        $table->timestamps();
+        //$table->increments('id');
+        $table->id();
+        $table->string('argument')->unique();
+        $table->text('url');
+        $table->timestamp('created_at')->nullable();
     });
     echo('Установка прошла успешно');
 } catch (PDOException $exception) {

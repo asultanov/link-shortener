@@ -25,7 +25,9 @@ class App
         $routerDispatch = $this->router->dispatch(Common::getMethod(), Common::getPatchUri());
 
         if (is_null($routerDispatch)) {
-            $routerDispatch = new DispatchedRoute('ErrorController@page404');
+            //$routerDispatch = new DispatchedRoute('ErrorController@page404');
+            header((isset($_SERVER['SERVER_PROTOCOL']) ? $_SERVER['SERVER_PROTOCOL'] : 'HTTP/1.0') . ' 404');
+            die();
         }
 
         list($class, $action) = explode('@', $routerDispatch->getController(), 2);
