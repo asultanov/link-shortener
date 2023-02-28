@@ -1,6 +1,4 @@
 <?php
-require __DIR__ . '/app/bootstrap.php';
+define('ROOT_DIR', __DIR__);
 
-//
-//$table = \App\Models\User::find(4);
-//dd($table->toArray());
+require __DIR__ . '/app/bootstrap.php';

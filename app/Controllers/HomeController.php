@@ -6,7 +6,10 @@ class HomeController extends MainController
 {
     public function index()
     {
-        dump('hello');
+        $data = [
+            'name' =>'my name is Index'
+        ];
+        $this->view->render('index', $data);
     }
 
     public function test($id, $str)
