@@ -1,0 +1,23 @@
+{
+  "name": "albert/url-cropping",
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/",
+      "App\\Di\\": "app/Di"
+    }
+  },
+  "authors": [
+    {
+      "name": "asultanov",
+      "email": "abt86su@gmail.com"
+    }
+  ],
+  "require": {
+    "illuminate/database": "^10.1",
+    "vlucas/phpdotenv": "^5.5",
+    "ext-pdo": "*"
+  },
+  "require-dev": {
+    "symfony/var-dumper": "^6.2"
+  }
+}
