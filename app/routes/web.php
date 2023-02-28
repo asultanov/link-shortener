@@ -10,4 +10,4 @@ $this->router->add('admin', '/admin/', 'HomeController@index');
 $this->router->add('test', '/test/(id:int)/(str:str)', 'HomeController@test');
 
 // POST-http::localhost/
-$this->router->add('test_post', '/admin)', 'HomeController@testPost','POST');
+$this->router->add('test_post', '/testPost', 'HomeController@testPost','POST');

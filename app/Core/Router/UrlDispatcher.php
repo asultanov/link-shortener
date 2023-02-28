@@ -4,20 +4,30 @@ namespace App\Core\Router;
 
 class UrlDispatcher
 {
-    private $method = ['GET', 'POST'];
+    private $method = [
+        'GET',
+        'POST',
+        'PUT',
+        'DELETE',
+        'HEAD'
+    ];
     private $routes = [
         'GET' => [],
         'POST' => [],
+        'PUT' => [],
+        'DELETE' => [],
+        'PATCH' => [],
+        'HEAD' => [],
     ];
     private $patterns = [
-        'int' => '[0-9]+',
+        'num' => '[0-9]+',
         'str' => '[a-zA-Z\.\-_%]+',
         'any' => '[a-zA-Z0-9\.\-_%]+',
     ];
 
-    public function addPattern($key, $pattern)
+    public function addPattern($name, $pattern)
     {
-        $this->patterns[$key] = $pattern;
+        $this->patterns[$name] = $pattern;
     }
 
     public function routes($method)
@@ -33,10 +43,26 @@ class UrlDispatcher
 
     private function convertPattern($pattern)
     {
-        if (strpos($pattern, '(') === false)
-            return $pattern;
 
-        return preg_replace_callback('#\((\w+):(\w+)\)#', [$this, 'replacePattern'], $pattern);
+        if (false === strpos($pattern, '(')) {
+            return $pattern;
+        }
+
+        if (preg_match('#^/\((\w+):(\w+):\?\)$#', $pattern)) {
+            throw new \InvalidArgumentException(sprintf('Prefix required when use optional placeholder in route "%s"', $pattern));
+        }
+
+        $parse = preg_replace_callback('#/\((\w+):(\w+):\?\)$#', [$this, 'replaceOptionalRoute'], $pattern);
+
+        return preg_replace_callback('#\((\w+):(\w+)\)#', [$this, 'replacePattern'], $parse);
+    }
+
+    private function replaceOptionalRoute($matches)
+    {
+        $name = $matches[1];
+        $pattern = $matches[2];
+
+        return '(?:/(?<' . $name . '>' . strtr($pattern, $this->patterns) . '))?';
     }
 
     private function replacePattern($matches)
@@ -46,7 +72,7 @@ class UrlDispatcher
 
     private function processParam($parameters)
     {
-        foreach ($parameters as $key=>$value) {
+        foreach ($parameters as $key => $value) {
             if (is_int($key)) {
                 unset($parameters[$key]);
             }
@@ -66,6 +92,7 @@ class UrlDispatcher
 
     private function doDispatch($method, $uri)
     {
+
         foreach ($this->routes[$method] as $route => $controller) {
             $pattern = '#^' . $route . '$#s';
             if (preg_match($pattern, $uri, $parameters)) {

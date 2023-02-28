@@ -11,6 +11,7 @@ class HomeController extends MainController
             'config'=> $this->config
         ];
 
+        dump($this->request);
         $this->view->render('index', $data);
     }
 
@@ -20,9 +21,9 @@ class HomeController extends MainController
     }
 
 
-    public function testPost($id, $str)
+    public function testPost()
     {
-        dump($id, $str);
+        dump($this->request);
     }
 
 }
