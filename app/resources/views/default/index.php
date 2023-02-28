@@ -8,7 +8,11 @@
 </head>
 <body>
 
-<?= dd($name) ?? 'Data not found' ?>
+<?php $this->theme->header() ?>
+
+<?= $name. ' - index file<br>' ?>
+
+<?php $this->theme->footer() ?>
 
 </body>
 </html>
