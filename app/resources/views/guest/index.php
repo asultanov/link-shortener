@@ -12,6 +12,9 @@
 
 <?= $name. ' - index file<br>' ?>
 
+<br>Config:
+<?php  dump($config) ?>
+
 <?php $this->footer() ?>
 
 </body>

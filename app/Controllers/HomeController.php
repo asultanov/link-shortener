@@ -7,8 +7,10 @@ class HomeController extends MainController
     public function index()
     {
         $data = [
-            'name' =>'my name is '
+            'name' =>'my name is ',
+            'config'=> $this->config
         ];
+
         $this->view->render('index', $data);
     }
 
