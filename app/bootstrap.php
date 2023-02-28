@@ -11,7 +11,7 @@ $dotenv->load();
 try {
     $di = new Di;
 
-    $services = require(__DIR__ . '\Config\Service.php');
+    $services = require(__DIR__ . '/Config/Service.php');
 
     foreach ($services as $service) {
         $provider = new $service($di);
