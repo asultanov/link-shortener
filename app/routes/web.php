@@ -6,6 +6,7 @@
 //      http::localhost
 $this->router->add('home', '/', 'HomeController@index');
 $this->router->add('makeLink', '/make-link', 'LinkController@makeLink','POST');
+$this->router->add('updateLink', '/update-link', 'LinkController@updateLink','POST');
 $this->router->add('goToLink', '/go/(lnk:any)', 'LinkController@goToLink');
 
 

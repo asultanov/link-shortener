@@ -14,6 +14,9 @@ try {
         $table->id();
         $table->string('argument')->unique();
         $table->text('url');
+        $table->text('callback_url')->nullable();
+        $table->integer('chat_id')->nullable();
+        $table->integer('message_id')->nullable();
         $table->timestamp('created_at')->nullable();
     });
     echo('Установка прошла успешно');
