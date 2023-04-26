@@ -40,6 +40,7 @@ class LinkController extends MainController
 
     public function updateLink()
     {
+        header('Content-type: application/json');
         $request = $this->request->post ?? [];
 
         $id = isset($request['id']) ? (int)$request['id'] : 0;
@@ -51,7 +52,7 @@ class LinkController extends MainController
         $link->chat_id = $chat_id;
         $link->message_id = $message_id;
         $link->save();
-        echo "ОК";
+        echo json_encode(['status' => 'success']);
     }
 
 
@@ -67,7 +68,8 @@ class LinkController extends MainController
             if (!is_null($link->callback_url) && !is_null($link->chat_id) && !is_null($link->message_id)) {
                 $this->callToBot($link->callback_url, $link->chat_id, $link->message_id);
                 Link::where([['chat_id', $link->chat_id], ['message_id', $link->message_id]])->delete();
-            }
+            } else
+                $link->delete();
 
             $url = $link->url;
             header("Location: $url");
